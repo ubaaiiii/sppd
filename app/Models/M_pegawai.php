@@ -8,8 +8,15 @@ class M_pegawai extends Model
 
     public function getPegawai($id = null)
     {
+      $db      = \Config\Database::connect();
+      $builder = $db->table('tb_pegawai a');
+
       if($id === null){
-        return $this->findAll();
+        // return $this->findAll();
+        $builder->select('a.nip, a.nama, b.msdesc jk, c.msdesc jab, a.telp');
+        $builder->join('tb_master b','b.msid = a.jk AND b.mstype="JK"');
+        $builder->join('tb_master c','c.msid = a.jab AND c.mstype="JAB"');
+        return $builder->get()->getResult();
       } else {
         return $this->find($id);
       }

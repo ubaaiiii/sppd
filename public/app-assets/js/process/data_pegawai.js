@@ -1,7 +1,8 @@
-$('#judul-halaman').text('Tabel Data Pegawai');
-
 $(document).ready(function(){
-  console.log(base_url());
+  if ($('#label-modal').html() == 'Tambah Pegawai') {
+    $('.select2').val('null').trigger('change');
+  }
+
   var tPegawai = $('#tabel-data-pegawai').DataTable({
       ajax:{
           url: base_url() + "data/pegawai",
@@ -10,9 +11,12 @@ $(document).ready(function(){
       },
       columns:[
       {data:"nip"},
+      {data:"nip"},
       {data:"nama"},
       {data:"jk"},
-      {data:"id_jenis_kegiatan",
+      {data:"jab"},
+      {data:"telp"},
+      {data:"id_pegawai",
        render: function(data,type,row){
          var actions = '<button type="button" id="edit" data-id="'+data+'" class="btn btn-icon rounded-circle btn-outline-warning mr-1 waves-effect waves-light" data-toggle="tooltip" data-placement="bottom" data-original-title="Ubah"><i class="feather icon-edit"></i></button>';
          actions = actions.concat('<button type="button" id="delete" data-id="'+data+'" class="btn btn-icon rounded-circle btn-outline-danger mr-1 waves-effect waves-light" data-toggle="tooltip" data-placement="bottom" data-original-title="Hapus"><i class="feather icon-trash"></i></button>');
@@ -29,9 +33,9 @@ $(document).ready(function(){
     columnDefs: [ {
       "searchable": false,
       "orderable": false,
-      "targets": [0,3]
+      "targets": [0,6]
     } ],
-    order: [ 1, 'asc' ],
+    order: [ 2, 'asc' ],
   });
 
   tPegawai.on( 'order.dt search.dt', function () {
@@ -45,13 +49,13 @@ $(document).ready(function(){
     $('#label-modal').html('Ubah Jenis Kegiatan');
     var data = $(this).attr('data-id');
     $.ajax({
-      url: base_url() + "data/jenis_kegiatan/cari/" + data,
+      url: base_url() + "data/pegawai/cari/" + data,
       type: "POST",
       success: function(data){
         data = JSON.parse(data);
-        $('#kode-awal').val(data.id_jenis_kegiatan);
-        $('#kode-data-pegawai').val(data.id_jenis_kegiatan);
-        $('#data-pegawai').val(data.jenis_kegiatan);
+        $('#kode-awal').val(data.id_pegawai);
+        $('#kode-data-pegawai').val(data.id_pegawai);
+        $('#data-pegawai').val(data.pegawai);
 
         $('#btn-cancel').removeAttr('hidden');
         $('#btn-reset').attr('hidden',true);
@@ -79,7 +83,7 @@ $(document).ready(function(){
     }).then(function (result) {
       if (result.value) {
         $.ajax({
-          url: base_url() + "data/jenis_kegiatan/delete/" + data,
+          url: base_url() + "data/pegawai/delete/" + data,
           type: "POST",
           success: function(data) {
             Swal.fire(
@@ -96,7 +100,7 @@ $(document).ready(function(){
       }
     })
   })
-  //
+
   $('#form-submit').submit(function(e){
     e.preventDefault();
     var datanya = $(this).serialize();
@@ -110,7 +114,7 @@ $(document).ready(function(){
       var kata1 = "diubah";
       $('#btn-submit').html('<span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Updating...');
     }
-    var urlAjax = base_url() + "data/jenis_kegiatan/" + tipe;
+    var urlAjax = base_url() + "data/pegawai/" + tipe;
     // console.log(urlAjax);
     $.ajax({
       url: urlAjax,
@@ -145,7 +149,11 @@ $(document).ready(function(){
   })
 
   $('#backdrop').on('hidden.bs.modal', function() {
-    $('#label-modal').html('Jenis Kegiatan Baru');
+    $('#label-modal').html('Tambah Pegawai');
   });
+
+  $('#btn-reset').click(function(){
+    $('.select2').val('null').trigger('change');
+  })
 
 })

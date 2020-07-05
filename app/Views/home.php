@@ -264,17 +264,17 @@
                 <ul class="nav navbar-nav" id="main-menu-navigation" data-menu="menu-navigation">
                     <li class="nav-item" data-menu="dropdown"><a class="nav-link" href="<?= base_url('home'); ?>"><i class="feather icon-home"></i><span>Home</span></a>
                     </li>
-                    <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-package"></i><span>Master</span></a>
+                    <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#" data-toggle="dropdown"><i class="feather icon-archive"></i><span>Master</span></a>
                         <ul class="dropdown-menu">
-                            <li data-menu=""><a class="dropdown-item" href="<?= base_url('home/data_pegawai'); ?>" data-toggle="dropdown"><i class="feather icon-users"></i>Data Pegawai</a>
-                            </li>
-                            <li data-menu=""><a class="dropdown-item" href="<?= base_url('home/pertanyaan_keamanan'); ?>" data-toggle="dropdown"><i class="feather icon-alert-circle"></i>Pertanyaan Keamanan</a>
-                            </li>
+                            <li data-menu=""><a class="dropdown-item" href="<?= base_url('home/data_pegawai'); ?>" data-toggle="dropdown"><i class="feather icon-file-text"></i>Data SPPD</a></li>
+                            <li data-menu=""><a class="dropdown-item" href="<?= base_url('home/data_pegawai'); ?>" data-toggle="dropdown"><i class="feather icon-file-text"></i>Data Kwitansi</a></li>
+                            <li data-menu=""><a class="dropdown-item" href="<?= base_url('home/pegawai'); ?>" data-toggle="dropdown"><i class="feather icon-users"></i>Data Pegawai</a></li>
+                            <li data-menu=""><a class="dropdown-item" href="<?= base_url('home/pertanyaan_keamanan'); ?>" data-toggle="dropdown"><i class="feather icon-database"></i>Data Master</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item" data-menu="dropdown"><a class="nav-link" href="<?= base_url('home/monitoring'); ?>"><i class="feather icon-layout"></i><span>Data Kegiatan</span></a>
+                    <li class="nav-item" data-menu="dropdown"><a class="nav-link" href="<?= base_url('home/monitoring'); ?>"><i class="feather icon-printer"></i><span>Cetak SPPD</span></a>
                     </li>
-                    <li class="nav-item" data-menu="dropdown"><a class="nav-link" href="<?= base_url('home/laporan'); ?>"><i class="feather icon-file-text"></i><span>Data Laporan</span></a>
+                    <li class="nav-item" data-menu="dropdown"><a class="nav-link" href="<?= base_url('home/laporan'); ?>"><i class="fa fa-files-o"></i><span>Data Laporan</span></a>
                     </li>
                 </ul>
             </div>
@@ -309,20 +309,6 @@
             <div class="content-body">
 
                 <?= view($content); ?>
-
-            </div>
-        </div>
-    </div>
-    <div class="modal fade text-left" id="backdrop" tabindex="-1" role="dialog" aria-labelledby="label-modal" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-primary white">
-                    <h4 class="modal-title" id="label-modal"></h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div id="load-content-here"></div>
 
             </div>
         </div>
@@ -366,11 +352,13 @@
     <!-- END: Page JS-->
     <script>
       $(document).ready(function(){
+        $('#judul-halaman').text('<?=$lokasi;?>');
+
         setTimeout(function(){
             $('li.nav-item:contains("<?=$lokasi;?>")').addClass("active");
             $('li[data-menu]:contains("<?=$lokasi;?>")').addClass("active");
             $('li[data-menu="dropdown-submenu"]:contains("<?=$lokasi;?>")').addClass("sidebar-group-active active open");
-        },64);
+        },200);
         $('input[maxlength]').maxlength();
 
         $('#backdrop').on('hidden.bs.modal', function() {

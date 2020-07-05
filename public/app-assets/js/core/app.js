@@ -247,8 +247,11 @@
         charTextarea = $(".char-textarea");
 
       if (!checkSpecialKeys(e)) {
-        if (textBox.value.length < maxLength - 1)
+        if (textBox.value.length < maxLength - 1) {
           textBox.value = textBox.value.substring(0, maxLength);
+        } else {
+          return false;
+        }
       }
       $(".char-count").html(textBox.value.length);
 
